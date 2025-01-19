@@ -1,13 +1,10 @@
 from enum import Enum
 from typing import Optional
-from fastapi import FastAPI, status, Response
-
-app = FastAPI()
+from fastapi import APIRouter, Response, status
 
 
-@app.get("/")
-def index():
-    return "Hello world"
+# can define a router and give every route in this file some standard settings
+router = APIRouter(prefix="/blog", tags=["blog"])
 
 
 # Order of the defined endpoints is important
@@ -18,8 +15,7 @@ def index():
 
 # Example of of query params with default values
 # Can use the python optional class for defaults as well
-@app.get("/blog/all", 
-         tags=["blog"], 
+@router.get("/all", 
          summary="Retrieves all blogs", 
          description="This api call simulates fetching all blogs",
          response_description="Available blogs"
@@ -30,7 +26,7 @@ def get_all_blogs(page=1, page_size: Optional[int] = 10):
 
 # Example with query and path params in the same endpoint
 # Tags allows us to better organize our endpoints
-@app.get("/blog/{id}/comments/{comment_id}", tags=["blog", "comment"])
+@router.get("/{id}/comments/{comment_id}", tags=["comment"])
 def get_comment(id: int, comment_id: int, valid: bool = True, username: Optional[str] = None):
     # Can also define the description in a doc string
     """
@@ -51,7 +47,7 @@ class BlogType(str, Enum):
     howto = "howto"
 
 
-@app.get("/blog/type{type}", tags=["blog"])
+@router.get("/type{type}")
 def get_blog(type: BlogType):
     return {'message': f"Blog with type {type}"}
 
@@ -60,7 +56,7 @@ def get_blog(type: BlogType):
 # Fast API will handle the validation for us with Pydantic allow us to type the arguments
 # Can pass a status code for the response here
 # Cna also pas a response object into the endpoint method
-@app.get("/blog/{id}", status_code=status.HTTP_200_OK, tags=["blog"])
+@router.get("/{id}", status_code=status.HTTP_200_OK, tags=["blog"])
 def get_blog(id: int, response: Response):
     if id > 5:
         response.status_code = status.HTTP_404_NOT_FOUND

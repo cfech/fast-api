@@ -27,3 +27,8 @@ Enables asynchronous performance: Uvicorn is designed to take full advantage of 
 - supports dependency injection
 - supports validation
 - can achieve 100% code coverage 
+
+## Routes
+- separate operations into multiple files
+- share prefix btw multiple operations
+- share tags
