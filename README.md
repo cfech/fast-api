@@ -32,3 +32,7 @@ Enables asynchronous performance: Uvicorn is designed to take full advantage of 
 - separate operations into multiple files
 - share prefix btw multiple operations
 - share tags
+
+## Dependencies
+ - allow a function to depend on another function
+ - Uses the `Depends()` class

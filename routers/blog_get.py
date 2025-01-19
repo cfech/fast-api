@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import Optional
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, Depends, Response, status
+
+from routers.blog_post import required_functionality # depends ket word allows for linking dependencies 
 
 
 # can define a router and give every route in this file some standard settings
@@ -20,8 +22,11 @@ router = APIRouter(prefix="/blog", tags=["blog"])
          description="This api call simulates fetching all blogs",
          response_description="Available blogs"
          )
-def get_all_blogs(page=1, page_size: Optional[int] = 10):
-    return {"message": f"All {page_size} blogs on {page}"}
+def get_all_blogs(page=1, 
+                    page_size: Optional[int] = 10,
+                    required_param: dict = Depends(required_functionality) # this function will be called by this endpoint because it is required, injecting functionality
+                    ):
+    return {"message": f"All {page_size} blogs on {page}",  "required_param": required_param}
 
 
 # Example with query and path params in the same endpoint

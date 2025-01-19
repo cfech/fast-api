@@ -61,3 +61,8 @@ def create_comment(blog: BlogModel, id: int,
                     comment_id: int = Path(gt=5, le=10)
                     ):
     return {"data": blog, "id": id, "comment_title": comment_title, "comment_id": comment_id, "content": content, "version": v}
+
+
+
+def required_functionality():
+    return {"message": "Learning fast api"}
