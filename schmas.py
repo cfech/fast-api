@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 # This will be our POJO
 class UserBase(BaseModel):
@@ -9,7 +9,10 @@ class UserBase(BaseModel):
 class UserDisplay(BaseModel):
     username: str
     email: str
-    # This is a config for this class
-    class Config():
-        # This setting allows the db to automatically convert the model DBUser into this type
-        orm_mode = True
+
+    # config updated to this syntax in pydantic v2
+    model_config = ConfigDict(from_attributes=True)
+    # # This is a config for this class
+    # class Config():
+    #     # This setting allows the db to automatically convert the model DBUser into this type
+    #     from_attributes = True
