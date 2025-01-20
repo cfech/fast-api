@@ -14,6 +14,8 @@
 - creates an environment to manage all dependencies
 - must source the env in a terminal
 - can check by running `which python` and make sure it is using the one from the env
+- can check which venv is activated by `echo $VIRTUAL_ENV`
+- can deactivate by `deactivate`
 
 
 ### Uvicorn and Fast API
